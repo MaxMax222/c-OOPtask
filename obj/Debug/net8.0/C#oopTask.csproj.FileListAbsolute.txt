@@ -1,0 +1,14 @@
+C:\Users\97254\Desktop\C#oopTask\bin\Debug\net8.0\C#oopTask.exe
+C:\Users\97254\Desktop\C#oopTask\bin\Debug\net8.0\C#oopTask.deps.json
+C:\Users\97254\Desktop\C#oopTask\bin\Debug\net8.0\C#oopTask.runtimeconfig.json
+C:\Users\97254\Desktop\C#oopTask\bin\Debug\net8.0\C#oopTask.dll
+C:\Users\97254\Desktop\C#oopTask\bin\Debug\net8.0\C#oopTask.pdb
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.AssemblyInfoInputs.cache
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.AssemblyInfo.cs
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.csproj.CoreCompileInputs.cache
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.dll
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\refint\C#oopTask.dll
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.pdb
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.genruntimeconfig.cache
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\ref\C#oopTask.dll
