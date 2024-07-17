@@ -12,3 +12,4 @@ C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\refint\C#oopTask.dll
 C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.pdb
 C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.genruntimeconfig.cache
 C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\ref\C#oopTask.dll
+C:\Users\97254\Desktop\C#oopTask\obj\Debug\net8.0\C#oopTask.sourcelink.json

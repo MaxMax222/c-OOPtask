@@ -2,51 +2,52 @@
 int choise; 
 Dictionary<string, Student> database = new Dictionary<string, Student>();
 
-while (!done){
-    repeatChoise:
+while (!done)
+{
+repeatChoise:
     Console.WriteLine($"enter option you would like to perform: [1-adding a new student, 2-altering student's info, 3 - display student's info]");
     Console.Write($"->");
-    choise = int.Parse(Console.ReadLine());
 
-    switch (choise){
+    choise = GetValidInt();
+
+    switch (choise)
+    {
         case 1:
-        CreateStudent(database);
-        break;
-        
+            CreateStudent(database);
+            break;
+
         case 2:
-        AlterStudent(database);
-        break;
+            if (database.Count > 0)
+                AlterStudent(database);
+            else
+            {
+                Console.WriteLine($"there are no student in the database");
+                goto repeatChoise;
+            }
+            break;
 
         case 3:
-        DisplayStudentInfo(database);
-        break;
+            if (database.Count > 0)
+                DisplayStudentInfo(database);
+            else
+            {
+                Console.WriteLine($"there are no student in the database");
+                goto repeatChoise;
+            }
+            break;
 
         default:
-        Console.WriteLine($"non existing choise, try again");
-        goto repeatChoise;
+            Console.WriteLine($"non existing choise, try again");
+            goto repeatChoise;
     }
 
     Console.WriteLine($"\n are you done: [yes - 1, no - 2]");
     Console.Write($"->");
-    choise = int.Parse(Console.ReadLine());
+    choise = GetValidInt();
 
     done = choise == 1;
 }
 
-static string GetName(Dictionary<string, Student> database){
-   string name;
-
-    repeatName:
-    Console.WriteLine($"enter the name of the student");
-    Console.Write($"->");
-    name = Console.ReadLine();
-    if(!database.ContainsKey(name)){
-        Console.WriteLine($"student does not exist, try again");
-        goto repeatName;
-    }
-
-    return name;
-}
 static void DisplayStudentInfo(Dictionary<string, Student> database)
 {
     string name = GetName(database);
@@ -69,7 +70,7 @@ static void AlterStudent(Dictionary<string, Student> database)
         Console.WriteLine($"]");
     }
     Console.Write($"->");
-    choise = int.Parse(Console.ReadLine());
+    choise = GetValidInt();
 
     switch (choise){
 
@@ -136,7 +137,7 @@ static void AlterStudent(Dictionary<string, Student> database)
 
     Console.WriteLine($"would you like to alter any other information about {name}? [1 - yes, 2 - no]");
     Console.Write($"->");
-    choise = int.Parse(Console.ReadLine());
+    choise = GetValidInt();
     if (choise == 1)
     {
         goto repeatAlter;
@@ -145,9 +146,9 @@ static void AlterStudent(Dictionary<string, Student> database)
 }
 
 static void CreateStudent(Dictionary<string, Student> database){
-    int choise = 0, id, age, avg;
-    string name = "", studyField;
-    Student student = null;
+    int choise, id, age, avg;
+    string name, studyField;
+    Student student;
 
     repeatStudent:
         Console.WriteLine($"enter the name of the student");
@@ -157,14 +158,14 @@ static void CreateStudent(Dictionary<string, Student> database){
             {
             Console.WriteLine($"enter the age of the student");
             Console.Write($"->");
-            age = int.Parse(Console.ReadLine());
+            age = GetValidInt();
             Console.WriteLine($"enter the id of the student");
             Console.Write($"->");
-            id = int.Parse(Console.ReadLine());
+            id = GetValidInt();
             
             repeatCollege:
             Console.WriteLine($"is the student in college[1 - yes, 2 - no]");
-            choise = int.Parse(Console.ReadLine());
+            choise = GetValidInt();
             switch (choise)
             {
                 case 1:
@@ -192,4 +193,36 @@ static void CreateStudent(Dictionary<string, Student> database){
             goto repeatStudent;
             
         }
+}
+
+
+static string GetName(Dictionary<string, Student> database){
+   string name;
+
+    repeatName:
+    Console.WriteLine($"enter the name of the student");
+    Console.Write($"->");
+    name = Console.ReadLine();
+    if(!database.ContainsKey(name)){
+        Console.WriteLine($"student does not exist, try again");
+        goto repeatName;
+    }
+
+    return name;
+}
+static int GetValidInt()
+{
+    int choise;
+    repeatChoise:
+    try
+    {
+        choise = int.Parse(Console.ReadLine());
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine($"{e.Message}");
+        goto repeatChoise;
+    }
+
+    return choise;
 }

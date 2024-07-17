@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("C#oopTask")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6710d5802a93aaef04e313f4948d049308c15051")]
 [assembly: System.Reflection.AssemblyProductAttribute("C#oopTask")]
 [assembly: System.Reflection.AssemblyTitleAttribute("C#oopTask")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
