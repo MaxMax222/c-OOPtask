@@ -1,16 +1,14 @@
 ﻿bool done = false;
-int choise; 
+int choice; 
 Dictionary<string, Student> database = new Dictionary<string, Student>();
 
 while (!done)
 {
-repeatChoise:
-    Console.WriteLine($"enter option you would like to perform: [1-adding a new student, 2-altering student's info, 3 - display student's info]");
-    Console.Write($"->");
+    Console.WriteLine("Enter option you would like to perform: [1 - Add a new student, 2 - Alter student's info, 3 - Display student's info]");
+    Console.Write("-> ");
+    choice = GetValidInt();
 
-    choise = GetValidInt();
-
-    switch (choise)
+    switch (choice)
     {
         case 1:
             CreateStudent(database);
@@ -20,209 +18,199 @@ repeatChoise:
             if (database.Count > 0)
                 AlterStudent(database);
             else
-            {
-                Console.WriteLine($"there are no student in the database");
-                goto repeatChoise;
-            }
+                Console.WriteLine("There are no students in the database.");
             break;
 
         case 3:
             if (database.Count > 0)
                 DisplayStudentInfo(database);
             else
-            {
-                Console.WriteLine($"there are no student in the database");
-                goto repeatChoise;
-            }
+                Console.WriteLine("There are no students in the database.");
             break;
 
         default:
-            Console.WriteLine($"non existing choise, try again");
-            goto repeatChoise;
+            Console.WriteLine("Non-existing choice, try again.");
+            break;
     }
 
-    Console.WriteLine($"\n are you done: [yes - 1, no - 2]");
-    Console.Write($"->");
-    choise = GetValidInt();
-
-    done = choise == 1;
+    Console.WriteLine("\nAre you done? [1 - Yes, 2 - No]");
+    Console.Write("-> ");
+    choice = GetValidInt();
+    done = choice == 1;
 }
 
 static void DisplayStudentInfo(Dictionary<string, Student> database)
 {
     string name = GetName(database);
-
     database[name].DisplayInformation();
 }
 
 static void AlterStudent(Dictionary<string, Student> database)
 {
     string name = GetName(database);
-    int choise;
+    int choice;
 
-    repeatAlter:
-    Console.Write($"enter what info you want to alter about {name} [1 - name, 2 - id, 3 - age ");
-    if (database[name] is CollegeStudent)
+    do
     {
-        Console.WriteLine($",4 - field of study, 5 - averege score]");
-    }
-    else{
-        Console.WriteLine($"]");
-    }
-    Console.Write($"->");
-    choise = GetValidInt();
+        Console.Write($"Enter what info you want to alter about {name} [1 - Name, 2 - ID, 3 - Age");
+        if (database[name] is CollegeStudent)
+        {
+            Console.WriteLine(", 4 - Field of Study, 5 - Average Score]");
+        }
+        else
+        {
+            Console.WriteLine("]");
+        }
+        Console.Write("-> ");
+        choice = GetValidInt();
 
-    switch (choise){
+        switch (choice)
+        {
+            case 1:
+                string newName = GetUniqueName(database);
+                var student = database[name];
+                database.Remove(name);
+                student.SetStudentName(newName);
+                database.Add(newName, student);
+                break;
 
-        case 1: // change name
-            string newName = GetName(database);
+            case 2:
+                Console.WriteLine($"Enter new ID for {name}");
+                Console.Write("-> ");
+                int newId = GetValidInt();
+                database[name].SetStudentID(newId);
+                break;
 
-            var deleted = database[name];
-            database.Remove(name);
+            case 3:
+                Console.WriteLine($"Enter new age for {name}");
+                Console.Write("-> ");
+                int newAge = GetValidInt();
+                database[name].SetStudentAge(newAge);
+                break;
 
-            deleted.SetStudentName(newName);
-            database.Add(newName, deleted);
-            break;
+            case 4:
+                if (database[name] is CollegeStudent collegeStudent)
+                {
+                    Console.WriteLine($"Enter the new field of study for {name}");
+                    Console.Write("-> ");
+                    string newField = Console.ReadLine();
+                    collegeStudent.SetFieldOfStudy(newField);
+                }
+                else
+                {
+                    Console.WriteLine("Student is not in college.");
+                }
+                break;
 
-        case 2: // change student id
-            int newId;
-            Console.WriteLine($"enter new id for {name}");
-            Console.Write($"->");
-            newId = int.Parse(Console.ReadLine());
-            database[name].SetStudentID(newId);
-            break;
-
-        case 3: // change student age
-         int newAge;
-            Console.WriteLine($"enter new age of {name}");
-            Console.Write($"->");
-            newAge = int.Parse(Console.ReadLine());
-            database[name].SetStudentID(newAge);
-            break;
-
-        case 4: // change student field of study (if in college)
-            if (database[name] is CollegeStudent collegeStudent1)
-            {
-                string newField;
-                Console.WriteLine($"enter the new field of study for {name}");
-                Console.Write("->");
-                newField = Console.ReadLine();
-                collegeStudent1.SetFieldOfStudy(newField);
-                database[name] = collegeStudent1;
-            }
-            else{
-                Console.WriteLine($"student is not in college");
-            }
-            break;
-
-        case 5: // change student averege score (if in college)
+            case 5:
                 if (database[name] is CollegeStudent collegeStudent2)
-            {
-                int newScore;
-                Console.WriteLine($"enter the new field of study for {name}");
-                Console.Write("->");
-                newScore = int.Parse(Console.ReadLine());
-                collegeStudent2.SetAvgScore(newScore);
-                database[name] = collegeStudent2;
-            }
-            else{
-                Console.WriteLine($"student is not in college");
-            }
-            break;
+                {
+                    Console.WriteLine($"Enter the new average score for {name}");
+                    Console.Write("-> ");
+                    int newScore = GetValidInt();
+                    collegeStudent2.SetAvgScore(newScore);
+                }
+                else
+                {
+                    Console.WriteLine("Student is not in college.");
+                }
+                break;
 
             default:
-            Console.WriteLine($"invalid option, try again");
-            goto repeatAlter;
-    }
+                Console.WriteLine("Invalid option, try again.");
+                break;
+        }
 
-    Console.WriteLine($"would you like to alter any other information about {name}? [1 - yes, 2 - no]");
-    Console.Write($"->");
-    choise = GetValidInt();
-    if (choise == 1)
-    {
-        goto repeatAlter;
-    }    
-        
+        Console.WriteLine($"Would you like to alter any other information about {name}? [1 - Yes, 2 - No]");
+        Console.Write("-> ");
+        choice = GetValidInt();
+    } while (choice == 1);
 }
 
-static void CreateStudent(Dictionary<string, Student> database){
-    int choise, id, age, avg;
+static void CreateStudent(Dictionary<string, Student> database)
+{
+    int choice, id, age, avg;
     string name, studyField;
     Student student;
 
-    repeatStudent:
-        Console.WriteLine($"enter the name of the student");
-        Console.Write($"->");
-        name = Console.ReadLine();
-        if(!database.ContainsKey(name))
-            {
-            Console.WriteLine($"enter the age of the student");
-            Console.Write($"->");
-            age = GetValidInt();
-            Console.WriteLine($"enter the id of the student");
-            Console.Write($"->");
-            id = GetValidInt();
-            
-            repeatCollege:
-            Console.WriteLine($"is the student in college[1 - yes, 2 - no]");
-            choise = GetValidInt();
-            switch (choise)
-            {
-                case 1:
-                    Console.WriteLine($"enter student's field of study of the student");
-                    Console.Write($"->");
-                    studyField = Console.ReadLine();
-                    Console.WriteLine($"enter the averege score of the student");
-                    Console.Write($"->");
-                    avg = int.Parse(Console.ReadLine());
-                    student = new CollegeStudent(name: name, ID: id, age: age, fieldOfStudy:studyField, avgScore:avg);
-                    break;
+    name = GetUniqueName(database);
+    Console.WriteLine($"Enter the age of the student");
+    Console.Write("-> ");
+    age = GetValidInt();
+    Console.WriteLine($"Enter the ID of the student");
+    Console.Write("-> ");
+    id = GetValidInt();
 
-                case 2:
-                    student = new Student(name: name, ID: id, age: age);
-                    break;
+    Console.WriteLine($"Is the student in college? [1 - Yes, 2 - No]");
+    choice = GetValidInt();
 
-                default:
-                    Console.WriteLine($"invalid choise, try again");
-                    goto repeatCollege;
-            }
-            database.Add(name, student);
-        }
-        else{
-            Console.WriteLine($"student already added, try again");
-            goto repeatStudent;
-            
-        }
+    switch (choice)
+    {
+        case 1:
+            Console.WriteLine($"Enter the student's field of study");
+            Console.Write("-> ");
+            studyField = Console.ReadLine();
+            Console.WriteLine($"Enter the average score of the student");
+            Console.Write("-> ");
+            avg = GetValidInt();
+            student = new CollegeStudent(name, id, age, studyField, avg);
+            break;
+
+        case 2:
+            student = new Student(name, id, age);
+            break;
+
+        default:
+            Console.WriteLine("Invalid choice, try again.");
+            CreateStudent(database); // Retry
+            return;
+    }
+
+    database.Add(name, student);
 }
 
-
-static string GetName(Dictionary<string, Student> database){
-   string name;
-
-    repeatName:
-    Console.WriteLine($"enter the name of the student");
-    Console.Write($"->");
-    name = Console.ReadLine();
-    if(!database.ContainsKey(name)){
-        Console.WriteLine($"student does not exist, try again");
-        goto repeatName;
-    }
+static string GetName(Dictionary<string, Student> database)
+{
+    string name;
+    do
+    {
+        Console.WriteLine("Enter the name of the student");
+        Console.Write("-> ");
+        name = Console.ReadLine();
+        if (!database.ContainsKey(name))
+        {
+            Console.WriteLine("Student does not exist, try again.");
+        }
+    } while (!database.ContainsKey(name));
 
     return name;
 }
+
+static string GetUniqueName(Dictionary<string, Student> database)
+{
+    string name;
+    do
+    {
+        Console.WriteLine("Enter the name of the student");
+        Console.Write("-> ");
+        name = Console.ReadLine();
+        if (database.ContainsKey(name))
+        {
+            Console.WriteLine("Student already added, try again.");
+        }
+    } while (database.ContainsKey(name));
+
+    return name;
+}
+
 static int GetValidInt()
 {
-    int choise;
-    repeatChoise:
-    try
+    int choice;
+    while (!int.TryParse(Console.ReadLine(), out choice))
     {
-        choise = int.Parse(Console.ReadLine());
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine($"{e.Message}");
-        goto repeatChoise;
+        Console.WriteLine("Invalid input, please enter a valid integer.");
+        Console.Write("-> ");
     }
 
-    return choise;
+    return choice;
 }
